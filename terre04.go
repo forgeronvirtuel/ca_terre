@@ -17,7 +17,7 @@ func isDigit(r byte) bool {
 func atoi(s string) (int, error) {
 	var v, ctr int
 
-	// Loop over each rune to check if it is a number and to add it
+	// Loop over each rune to check if it is a digit and to add it
 	// to the whole converted number
 	for idx := len(s) - 1; idx > 0; idx, ctr = idx-1, ctr+1 {
 		r := s[idx]
@@ -27,6 +27,7 @@ func atoi(s string) (int, error) {
 		v += int(r-'0') * int(math.Pow10(ctr))
 	}
 
+	// Special case for the first char as it can be: +, - or a digit
 	frstRune := s[0]
 	if frstRune == '-' {
 		v = -v
