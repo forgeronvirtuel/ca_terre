@@ -28,8 +28,23 @@ func main() {
 		params[name] = match[i]
 	}
 
-	// Converting date formats
+	// Checking that there is no weird time
 	h, _ := strconv.Atoi(params["hour"])
+	m, _ := strconv.Atoi(params["minute"])
+	if h < 0 || 23 < h {
+		fmt.Fprintf(os.Stderr, "Error, hours should be 00 <= hours <= 23, got %d\n", h)
+		os.Exit(3)
+	}
+	if m < 0 || 59 < m {
+		fmt.Fprintf(os.Stderr, "Error, minutes should be 00 <= minutes <= 59 , got %d\n", m)
+		os.Exit(4)
+	}
+
+	// Converting date formats
+	if h == 0 {
+		fmt.Printf("12:%sPM\n", params["minute"])
+		return
+	}
 	if h <= 12 {
 		fmt.Printf("%sAM\n", os.Args[1])
 		return
